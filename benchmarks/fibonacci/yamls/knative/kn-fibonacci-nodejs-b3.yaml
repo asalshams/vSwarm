@@ -23,18 +23,18 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: fibonacci-nodejs
+  name: fibonacci-nodejs-b3
   namespace: default
 spec:
   template:
     metadata:
       annotations:
-        autoscaling.knative.dev/minScale: "2"
-        autoscaling.knative.dev/maxScale: "2"
-        autoscaling.knative.dev/target: "50"
-        serving.knative.dev/containerConcurrency: "50"
+        autoscaling.knative.dev/minScale: "4"
+        autoscaling.knative.dev/maxScale: "4"
+        autoscaling.knative.dev/target: "25"
+        serving.knative.dev/containerConcurrency: "25"
     spec:
-      containerConcurrency: 50
+      containerConcurrency: 25
       timeoutSeconds: 60
       containers:
         - name: relay
@@ -65,8 +65,8 @@ spec:
             - --port=50051
           resources:
             requests:
-              cpu: "500m"
-              memory: "500Mi"
+              cpu: "250m"
+              memory: "250Mi"
             limits:
-              cpu: "500m"
-              memory: "500Mi"
+              cpu: "250m"
+              memory: "250Mi"

@@ -23,18 +23,18 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: fibonacci-go
+  name: fibonacci-go-a1
   namespace: default
 spec:
   template:
     metadata:
       annotations:
-        autoscaling.knative.dev/minScale: "10"
-        autoscaling.knative.dev/maxScale: "10"
-        autoscaling.knative.dev/target: "10"
-        serving.knative.dev/containerConcurrency: "10"
+        autoscaling.knative.dev/minScale: "1"
+        autoscaling.knative.dev/maxScale: "1"
+        autoscaling.knative.dev/target: "1"
+        serving.knative.dev/containerConcurrency: "1"
     spec:
-      containerConcurrency: 10
+      containerConcurrency: 1
       timeoutSeconds: 60
       containers:
         - name: relay
@@ -51,7 +51,6 @@ spec:
             - --generator=linear
             - --lowerBound=1
             - --upperBound=10
-
           resources:
             requests:
               cpu: "125m"
@@ -62,11 +61,11 @@ spec:
         - name: fibonacci-go
           image: docker.io/vhiveease/fibonacci-go:latest
           args:
-            - --addr=0.0.0.0:50051
+            - -addr=0.0.0.0:50051
           resources:
             requests:
-              cpu: "100m"
-              memory: "100Mi"
+              cpu: "1000m"
+              memory: "1Gi"
             limits:
-              cpu: "100m"
-              memory: "100Mi"
+              cpu: "1000m"
+              memory: "1Gi"
