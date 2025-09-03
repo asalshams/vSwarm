@@ -24,7 +24,7 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: fibonacci-python-a4
-  namespace: default
+  namespace: constrained-tests-a4
 spec:
   template:
     metadata:
@@ -53,11 +53,11 @@ spec:
             - --upperBound=10
           resources:
             requests:
-              cpu: "125m"
-              memory: "256Mi"
+              cpu: "30m"      # Minimal for relay
+              memory: "64Mi"   # Reduced
             limits:
-              cpu: "125m"
-              memory: "256Mi"
+              cpu: "30m"      # Minimal for relay
+              memory: "64Mi"   # Reduced
         - name: fibonacci-python
           image: docker.io/vhiveease/fibonacci-python:latest
           args:

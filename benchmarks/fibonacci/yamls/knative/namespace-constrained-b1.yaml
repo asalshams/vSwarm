@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: constrained-tests-b1
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: cpu-quota-b1
+  namespace: constrained-tests-b1
+spec:
+  hard:
+    requests.cpu: "1180m"    # Single B1 pod (1130m) + 50m buffer (queue-proxy gets 100m CPU)
+    limits.cpu: "1180m"
+    requests.memory: "1238Mi" # Single B1 pod (1188Mi) + 50Mi buffer (queue-proxy gets 100Mi memory)
+    limits.memory: "1238Mi"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-limit-range-b1
+  namespace: constrained-tests-b1
+spec:
+  limits:
+  - default:
+      cpu: "1000m"
+      memory: "1Gi"
+    max:
+      cpu: "1000m"     # Hard maximum per container - enforces B1 function limit
+      memory: "1Gi"    # Hard maximum per container - enforces B1 function limit
+    min:
+      cpu: "10m"
+      memory: "10Mi"
+    type: Container

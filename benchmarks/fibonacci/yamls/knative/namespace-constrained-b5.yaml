@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: constrained-tests-b5
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: cpu-quota-b5
+  namespace: constrained-tests-b5
+spec:
+  hard:
+    requests.cpu: "2350m"    # Ten B5 pods (2300m) + 50m buffer (queue-proxy gets 100m CPU per pod)
+    limits.cpu: "2350m"
+    requests.memory: "1990Mi" # Ten B5 pods (1940Mi) + 50Mi buffer (queue-proxy gets 100Mi memory per pod)
+    limits.memory: "1990Mi"
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: cpu-limit-range-b5
+  namespace: constrained-tests-b5
+spec:
+  limits:
+  - default:
+      cpu: "100m"
+      memory: "100Mi"
+    max:
+      cpu: "100m"      # Hard maximum per container - enforces B5 function limit
+      memory: "100Mi"  # Hard maximum per container - enforces B5 function limit
+    min:
+      cpu: "10m"
+      memory: "10Mi"
+    type: Container
