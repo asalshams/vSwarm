@@ -12,8 +12,8 @@ spec:
   hard:
     requests.cpu: "2350m"    # Ten B5 pods (2300m) + 50m buffer (queue-proxy gets 100m CPU per pod)
     limits.cpu: "2350m"
-    requests.memory: "1990Mi" # Ten B5 pods (1940Mi) + 50Mi buffer (queue-proxy gets 100Mi memory per pod)
-    limits.memory: "1990Mi"
+    requests.memory: "2690Mi" # Ten B5 pods (2640Mi: 10×(100Mi+64Mi+100Mi)) + 50Mi buffer
+    limits.memory: "2690Mi"
 ---
 apiVersion: v1
 kind: LimitRange
