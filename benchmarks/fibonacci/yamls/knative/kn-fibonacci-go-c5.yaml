@@ -29,8 +29,8 @@ spec:
   template:
     metadata:
       annotations:
-        autoscaling.knative.dev/minScale: "10"
-        autoscaling.knative.dev/maxScale: "10"
+        autoscaling.knative.dev/minScale: "8"
+        autoscaling.knative.dev/maxScale: "8"
         autoscaling.knative.dev/target: "20"
         serving.knative.dev/containerConcurrency: "20"
     spec:
